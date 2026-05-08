@@ -1,0 +1,52 @@
+2024-01-15 10:00:01 INFO  [order-service] Order created successfully orderId=10231 userId=5521 amount=299.0
+2024-01-15 10:00:02 INFO  [payment-service] Payment request received orderId=10231 amount=299.0
+2024-01-15 10:00:02 INFO  [inventory-service] Stock check passed productId=88 qty=3
+2024-01-15 10:00:03 INFO  [payment-service] Payment processed successfully orderId=10231
+2024-01-15 10:00:05 INFO  [order-service] Order created successfully orderId=10232 userId=5522 amount=150.0
+2024-01-15 10:00:06 INFO  [payment-service] Payment request received orderId=10232 amount=150.0
+2024-01-15 10:00:07 INFO  [payment-service] Payment processed successfully orderId=10232
+2024-01-15 10:00:10 INFO  [order-service] Order created successfully orderId=10233 userId=5523 amount=89.0
+2024-01-15 10:00:11 INFO  [payment-service] Payment request received orderId=10233 amount=89.0
+2024-01-15 10:00:12 INFO  [payment-service] Payment processed successfully orderId=10233
+2024-01-15 10:00:15 INFO  [user-service] User login successful userId=5524
+2024-01-15 10:00:16 INFO  [order-service] Order created successfully orderId=10234 userId=5524 amount=499.0
+2024-01-15 10:00:17 INFO  [inventory-service] Stock check passed productId=91 qty=1
+2024-01-15 10:00:18 INFO  [payment-service] Payment request received orderId=10234 amount=499.0
+2024-01-15 10:00:19 INFO  [payment-service] Payment processed successfully orderId=10234
+2024-01-15 10:02:00 INFO  [database-service] Connection pool initialized maxConn=50 activeConn=12
+2024-01-15 10:02:01 INFO  [order-service] Order created successfully orderId=10235 userId=5525 amount=320.0
+2024-01-15 10:02:02 INFO  [payment-service] Payment request received orderId=10235 amount=320.0
+2024-01-15 10:02:05 WARN  [database-service] Connection pool usage high activeConn=41 maxConn=50
+2024-01-15 10:02:06 INFO  [payment-service] Payment processed successfully orderId=10235
+2024-01-15 10:02:10 WARN  [database-service] Connection pool usage high activeConn=46 maxConn=50
+2024-01-15 10:02:11 INFO  [order-service] Order created successfully orderId=10236 userId=5526 amount=210.0
+2024-01-15 10:02:12 ERROR [database-service] Connection pool exhausted maxConn=50 activeConn=50 waitingRequests=5
+2024-01-15 10:02:13 ERROR [payment-service] Database connection timeout orderId=10236 retryCount=1 error=connection_pool_exhausted
+2024-01-15 10:02:14 ERROR [payment-service] Database connection timeout orderId=10236 retryCount=2 error=connection_pool_exhausted
+2024-01-15 10:02:15 ERROR [payment-service] Payment failed orderId=10236 reason=db_unavailable
+2024-01-15 10:02:16 ERROR [order-service] Payment callback failed orderId=10236 status=PAYMENT_ERROR
+2024-01-15 10:02:17 ERROR [database-service] Connection pool exhausted maxConn=50 activeConn=50 waitingRequests=12
+2024-01-15 10:02:18 ERROR [payment-service] Database connection timeout orderId=10237 retryCount=1 error=connection_pool_exhausted
+2024-01-15 10:02:18 ERROR [inventory-service] Database query failed productId=92 error=connection_timeout
+2024-01-15 10:02:19 ERROR [payment-service] Payment failed orderId=10237 reason=db_unavailable
+2024-01-15 10:02:19 ERROR [user-service] Session store unavailable userId=5527 error=db_connection_failed
+2024-01-15 10:02:20 ERROR [order-service] Payment callback failed orderId=10237 status=PAYMENT_ERROR
+2024-01-15 10:02:20 ERROR [database-service] Connection pool exhausted maxConn=50 activeConn=50 waitingRequests=18
+2024-01-15 10:02:21 ERROR [payment-service] Database connection timeout orderId=10238 retryCount=1 error=connection_pool_exhausted
+2024-01-15 10:02:21 ERROR [inventory-service] Database query failed productId=93 error=connection_timeout
+2024-01-15 10:02:22 ERROR [payment-service] Payment failed orderId=10238 reason=db_unavailable
+2024-01-15 10:02:22 ERROR [order-service] Payment callback failed orderId=10238 status=PAYMENT_ERROR
+2024-01-15 10:02:23 CRITICAL [database-service] System critical: all connections exhausted service_degraded=true
+2024-01-15 10:02:24 ERROR [api-gateway] Downstream service unavailable service=payment-service latency=5023ms
+2024-01-15 10:02:24 ERROR [api-gateway] Downstream service unavailable service=inventory-service latency=5018ms
+2024-01-15 10:02:25 ERROR [api-gateway] Downstream service unavailable service=user-service latency=5031ms
+2024-01-15 10:02:26 ERROR [notification-service] Failed to send order confirmation orderId=10236 error=db_unavailable
+2024-01-15 10:02:27 ERROR [notification-service] Failed to send order confirmation orderId=10237 error=db_unavailable
+2024-01-15 10:02:30 INFO  [database-service] Starting connection pool recovery releasing stale connections
+2024-01-15 10:02:35 INFO  [database-service] Connection pool partially recovered activeConn=25 maxConn=50
+2024-01-15 10:02:40 INFO  [payment-service] Database connection restored resuming normal operations
+2024-01-15 10:02:41 INFO  [inventory-service] Database connection restored
+2024-01-15 10:02:42 INFO  [user-service] Session store reconnected
+2024-01-15 10:02:45 INFO  [database-service] Connection pool fully recovered activeConn=15 maxConn=50
+2024-01-15 10:02:46 INFO  [payment-service] Payment processed successfully orderId=10239
+2024-01-15 10:02:47 INFO  [order-service] Order created successfully orderId=10240 userId=5530 amount=175.0

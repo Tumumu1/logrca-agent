@@ -1,0 +1,47 @@
+[
+  {
+    "id": "RCA-001",
+    "title": "数据库连接池耗尽导致级联故障",
+    "symptoms": ["connection pool exhausted", "database connection timeout", "downstream service unavailable", "payment failed"],
+    "root_cause": "database-service 连接池配置过小，高并发场景下连接池耗尽，导致依赖数据库的所有下游服务（payment、inventory、user）级联超时失败",
+    "affected_services": ["database-service", "payment-service", "inventory-service", "user-service"],
+    "fix": "1. 立即扩大连接池上限（maxConn 从50提升至200）\n2. 为各业务服务设置独立连接池避免资源争抢\n3. 增加连接池监控告警阈值（80%时告警）\n4. 引入连接池熔断机制",
+    "tags": ["database", "connection-pool", "cascade-failure", "high-concurrency"]
+  },
+  {
+    "id": "RCA-002",
+    "title": "内存泄漏导致服务OOM崩溃",
+    "symptoms": ["OutOfMemoryError", "GC overhead limit exceeded", "service restart", "heap space"],
+    "root_cause": "order-service 存在内存泄漏，长时间运行后堆内存耗尽触发OOM，服务崩溃重启",
+    "affected_services": ["order-service"],
+    "fix": "1. 分析heap dump定位泄漏对象\n2. 修复对象生命周期管理\n3. 添加JVM内存监控和自动重启策略",
+    "tags": ["memory", "oom", "java", "heap"]
+  },
+  {
+    "id": "RCA-003",
+    "title": "网络分区导致服务发现失败",
+    "symptoms": ["connection refused", "service discovery failed", "no healthy upstream", "circuit breaker open"],
+    "root_cause": "网络分区导致 consul/etcd 节点间心跳丢失，服务注册信息过期，api-gateway 无法发现健康服务实例",
+    "affected_services": ["api-gateway", "consul", "all-services"],
+    "fix": "1. 检查网络设备和防火墙规则\n2. 重启服务注册中心\n3. 触发服务重新注册\n4. 优化健康检查超时参数",
+    "tags": ["network", "service-discovery", "consul", "partition"]
+  },
+  {
+    "id": "RCA-004",
+    "title": "慢查询导致数据库响应超时",
+    "symptoms": ["query timeout", "slow query", "database latency high", "lock wait timeout"],
+    "root_cause": "数据库缺少索引，随着数据量增长全表扫描耗时剧增，持有锁时间过长导致其他查询排队超时",
+    "affected_services": ["database-service", "order-service", "payment-service"],
+    "fix": "1. 分析慢查询日志\n2. 为高频查询字段添加索引\n3. 优化SQL语句\n4. 考虑读写分离",
+    "tags": ["database", "slow-query", "index", "lock"]
+  },
+  {
+    "id": "RCA-005",
+    "title": "消息队列积压导致订单处理延迟",
+    "symptoms": ["message queue lag", "consumer lag", "order processing delay", "kafka offset lag"],
+    "root_cause": "消费者处理能力不足，生产速度远超消费速度，消息积压触发超时和重试，进一步加剧积压",
+    "affected_services": ["order-service", "notification-service", "kafka"],
+    "fix": "1. 水平扩展消费者实例\n2. 增加topic分区数\n3. 优化消费者批处理逻辑\n4. 设置合理的重试策略",
+    "tags": ["kafka", "message-queue", "consumer-lag", "backpressure"]
+  }
+]
